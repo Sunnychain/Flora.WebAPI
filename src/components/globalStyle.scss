@@ -1,0 +1,49 @@
+.box-img {
+    background-size: cover;
+    background-position: center;
+}
+
+.flora {
+    background-image: url("../images/tree.png");
+    opacity: 1;
+    h3,
+    h4 {
+        font-size: 23px;
+        font-family: "Poppins", sans-serif;
+    }
+}
+
+.capped {
+    background-image: url("../images/min_Flora.png");
+    opacity: 1;
+    h3,
+    h4 {
+        font-size: 23px;
+        font-family: "Poppins", sans-serif;
+    }
+}
+
+.farms {
+    background-image: url("../images/style-flr.png");
+    opacity: 1;
+    h3,
+    h4 {
+        font-size: 10px;
+        font-family: "Poppins", sans-serif;
+    }
+}
+
+.oghan {
+    width: 100%;
+    height: 20vh;
+    background-image: url('../images/OGHAM.png');
+    background-size:cover;
+    background-position: center;
+}
+
+.account-Header {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 20px;
+    
+}
