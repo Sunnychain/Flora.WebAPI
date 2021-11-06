@@ -57,13 +57,6 @@ export default function Home (props) {
       </li>
 
       <li className="mt-3 p-2 hover:text-blue-600 dark-hover:text-blue-300 rounded-lg">
-        <Link to="/gallery" className="flex flex-col items-center">
-       <img className="h-15 w-40 rounded-full mr-3" src={PROJECT} alt=""/>
-          <span className="text-xs mt-2">Galerry</span>
-        </Link>
-      </li>
-
-      <li className="mt-3 p-2 hover:text-blue-600 dark-hover:text-blue-300 rounded-lg">
         <Link to="/" className="flex flex-col items-center">
          <img className="h-30 w-40 rounded-full mr-3" src={ABOUT} alt=""/>
           <span className="text-xs mt-2">About</span>
