@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSubstrate } from '../../substrate-lib';
 import AccountSelector from '../../components/AccountSelector';
+import { message, loader } from '../../middlewares/status';
+
 import NFT from '../../Website/img/simbolo-RMTerra.png';
 import FEMALE from '../../Website/img/mascote-feminina-FLORA.png';
 import MALE from '../../images/tree.png';
 import DONATE from '../../Website/img/maosemente.png';
 import PROJECT from '../../images/style-flor-black.png';
-import './Home.scss';
-import { message, loader } from '../../middlewares/status';
 import ABOUT from '../../Website/img/Nft MArket Flora.png';
+
+import './Home.scss';
 export default function Home (props) {
   const [accountAddress, setAccountAddress] = useState(null);
   const { apiState, keyringState, apiError } = useSubstrate();
@@ -28,7 +30,7 @@ export default function Home (props) {
     <>
       <div className="h-screen w-full flex overflow-hidden select-none">
   <nav className="w-24 flex flex-col items-center bg-white dark:bg-gray-800 py-4 w-40">
-    <div classNameName="flex justify-center">
+    <div className="flex justify-center">
       <img src={NFT} width="30px" alt="token" />
     </div>
 
@@ -90,8 +92,8 @@ export default function Home (props) {
         <div>
           <ul className="pt-1 pb-2 px-3 overflow-y-auto">
             <li className="mt-2 ">
-              <section class="img-nft ">
-              <p className="p-5 flex flex-col justify-between  " href="/market">
+              <section className="img-nft ">
+              <div className="p-5 flex flex-col justify-between  " href="/market">
               <div className=" h-40 flex items-top justify-between font-semibold ">
                 <span>NFT</span>
                 <div className="flex items-between ">
@@ -121,12 +123,12 @@ export default function Home (props) {
 
                 </div>
               </div>
-              </p>
+              </div>
               </section>
             </li>
             <li className="mt-3">
-            <section class="img-ogham ">
-              <p className="p-5 flex flex-col justify-between  " href="/market">
+            <section className="img-ogham ">
+              <div className="p-5 flex flex-col justify-between  " href="/market">
               <div className=" h-40 flex items-top justify-between font-semibold ">
                 <span>OGHAM</span>
                 <div className="flex items-between ">
@@ -156,7 +158,7 @@ export default function Home (props) {
 
                 </div>
               </div>
-              </p>
+              </div>
               </section>
             </li>
           </ul>

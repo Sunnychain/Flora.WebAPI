@@ -62,7 +62,6 @@ export function Render (props) {
           const number = await api.query.tokenNonFungible.nextTokenId();
           const numberLooop = number.toJSON();
           const dale = parseInt(numberLooop);
-          console.log('conta', accountSelected);
           for (let a = 0; a <= dale - 1; a += 1) {
             const token = await api.query.tokenNonFungible.ownedTokens(
               accountSelected,
@@ -86,7 +85,6 @@ export function Render (props) {
             }
             return contador;
           });
-          console.log(NumbersCont.length);
           setCont(NumbersCont.length);
           setNft(filterArr);
 
@@ -178,7 +176,6 @@ export function Render (props) {
         console.log(e);
       }
     }
-    console.log(props);
     return (
       <>
         <tbody className="bg-white">
@@ -200,10 +197,10 @@ export function Render (props) {
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                <div className="text-sm leading-5 text-gray-900">
+                <div className="text-sm leading-5 text-gray-900" key={rs.name}>
                   {rs.name}{' '}
                 </div>
-                <div className="text-sm leading-5 text-gray-500">
+                <div className="text-sm leading-5 text-gray-500" key={rs.nft_type}>
                   {rs.nft_type}
                 </div>
               </td>
@@ -212,7 +209,7 @@ export function Render (props) {
                   Active
                 </span>
               </td>
-              <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
+              <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500" key={rs.co2_offset_per_year}>
                 Co2 Offset /year: <b>{rs.co2_offset_per_year}</b>
               </td>
 
@@ -222,12 +219,14 @@ export function Render (props) {
                   className="text-indigo-600 hover:text-indigo-900"
                   id={rs.token_id}
                   onClick={handleShow}
+                  key={rs.token_id}
                 >
                   Sale
                 </Link>
                 <Link
                   to="#"
                   className="mx-5 text-indigo-600 hover:text-indigo-900"
+                  key="show"
                   id={rs.token_id}
                   onClick={handleShowSet}
                 >

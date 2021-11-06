@@ -8,7 +8,6 @@ import AboutPage from './pages/About/About';
 import Market from './pages/market/Market';
 import Auctions from './pages/Auctions/Auctions';
 import Profile from './pages/Profile/Profile';
-
 import Details from './pages/Description/Description';
 import { SubstrateContextProvider } from './substrate-lib';
 export default function App () {
@@ -39,6 +38,7 @@ export default function App () {
           <Route path="/perfil" exact>
             <Profile />
           </Route>
+
         </Switch>
       </Router>
     </SubstrateContextProvider>

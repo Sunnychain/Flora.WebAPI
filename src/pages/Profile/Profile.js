@@ -7,8 +7,8 @@ import Button from 'react-bootstrap/Button';
 import { Render } from './RenderNFts';
 import { useSubstrate } from '../../substrate-lib';
 import { message, loader } from '../../middlewares/status';
-import 'tailwindcss/tailwind.css';
 import Logo from '../../images/tree-rem.png';
+import 'tailwindcss/tailwind.css';
 
 function Profile (props) {
   const [accountAddress, setAccountAddress] = useState(null);
@@ -18,14 +18,10 @@ function Profile (props) {
   const [targetValue, setTargetValue] = useState('');
   const [nftId, setNftId] = useState('');
   const [status, setStatus] = useState('');
-  const [render, setRender] = useState(true);
   const [showAuction, setShowAuction] = useState(false);
   const { api, apiState, keyringState, apiError, keyring } = useSubstrate();
 
   useEffect(() => {
-    if (accountAddress === '') {
-      return null;
-    }
     setAccountSelected(accountAddress);
     async function getTokens () {
       const MyArray = [];
@@ -34,7 +30,7 @@ function Profile (props) {
           const number = await api.query.tokenNonFungible.nextTokenId();
           const numberLooop = number.toJSON();
           const dale = parseInt(numberLooop);
-          console.log('conta', accountSelected);
+
           for (let a = 0; a <= dale - 1; a += 1) {
             const token = await api.query.tokenNonFungible.ownedTokens(
               accountSelected,
@@ -56,8 +52,8 @@ function Profile (props) {
       return null;
     }
     getTokens();
-  }, [api.query.tokenNonFungible, accountAddress, api, accountSelected]);
-  console.log('id da nft', nftId, 'valor a ser vendido', targetValue);
+  }, [accountAddress, api, accountSelected]);
+
   const accountPair =
     accountAddress &&
     keyringState === 'READY' &&
@@ -82,21 +78,18 @@ function Profile (props) {
     return fromAcct;
   };
   const txResHandler = ({ status }) => {
-    setRender(false);
     if (status.isFinalized) {
       setStatus(status.type);
-      setRender(true);
     }
     setStatus(status.type);
   };
 
   async function saleNft () {
-    setRender(false);
     const fromAcct = await getFromAcct();
     const extr = await api.tx.nftMarket.addSale(nftId, targetValue);
     const saleExists = await api.query.nftMarket.salesInfo(nftId);
     const response = await saleExists.toHuman();
-    console.log(response, 'sou');
+
     try {
       if (
         (await response) === 'undefined' ||
@@ -175,8 +168,8 @@ function Profile (props) {
             </div>
             <nav className="mt-10">
               <Link
+              to="/auctions"
                 className="flex items-center mt-4 py-2 px-6 bg-gray-700 bg-opacity-25 text-gray-100"
-                to="/auctions"
               >
                 <svg
                   className="h-6 w-6"
@@ -221,8 +214,8 @@ function Profile (props) {
                 <span className="mx-3">NFT MARKET</span>
               </Link>
               <Link
+              to="/App"
                 className="flex items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
-                to="/App"
               >
                 <svg
                   className="h-6 w-6"
@@ -241,8 +234,8 @@ function Profile (props) {
                 <span className="mx-3">Home</span>
               </Link>
               <Link
+              to="#"
                 className="flex items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
-                to="#"
               >
                 <svg
                   className="h-6 w-6"
@@ -280,25 +273,7 @@ function Profile (props) {
                     className="fixed inset-0 h-full w-full z-10"
                     style={{ display: 'none' }}
                   />
-                  <div
-                    x-show="dropdownOpen"
-                    className="absolute right-0 mt-2 w-48 bg-white rounded-md overflow-hidden shadow-xl z-10"
-                    style={{ display: 'none' }}
-                  >
-                    <Link
-                      href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white"
-                    >
-                      Profile
-                    </Link>
 
-                    <Link
-                      href="/login"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white"
-                    >
-                      Logout
-                    </Link>
-                  </div>
                 </div>
               </div>
             </header>

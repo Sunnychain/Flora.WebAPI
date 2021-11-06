@@ -17,24 +17,22 @@ function Details (props) {
 
   useEffect(() => {
     const tokenId = props.match.params.id.replace(/\D+/g, '');
-    console.log(tokenId);
-
     async function getToken () {
       setLoading(false);
       setAccountSelected(accountAddress);
-      const ownerInfoToken = await api.query.nftMarket.salesInfo(tokenId);
       try {
-        setLoading(true);
+        const ownerInfoToken = await api.query.nftMarket.salesInfo(tokenId);
         const onwerInfoTokenHuman = await ownerInfoToken.toHuman();
         const ownerId = await onwerInfoTokenHuman.owner;
         const infoToken = await api.query.tokenNonFungible.ownedTokens(ownerId, tokenId);
         setNft(infoToken.toHuman());
+        setLoading(true);
       } catch (e) {
         console.log(e);
       }
     }
     getToken();
-  }, [api, props.match.params.id]);
+  }, [api, props.match.params.id, accountAddress, accountSelected]);
 
   if (apiState === 'ERROR') return message(apiError);
   else if (apiState !== 'READY') return loader('Connecting to Substrate');
@@ -44,20 +42,20 @@ function Details (props) {
   }
 
   return (
-    <div class="bg-white">
-      <nav class="border-b">
-        <div class="container px-6 py-2 mx-auto md:flex md:justify-between md:items-center">
-          <div class="flex items-center justify-between">
+    <div className="bg-white">
+      <nav className="border-b">
+        <div className="container px-6 py-2 mx-auto md:flex md:justify-between md:items-center">
+          <div className="flex items-center justify-between">
             <div>
               <Link to="#" className="text-xl text-gray-800 font-semiblod md:text-3xl hover:text-gray-700">
                 <img src={flora} alt="flora" width="200px" />
               </Link>
             </div>
-            <div class="flex md:hidden">
+            <div className="flex md:hidden">
               <button type="button" aria-label="toggle menu"
-                class="text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-600">
-                <svg viewBox="0 0 24 24" class="w-6 h-6 fill-current">
-                  <path fill-rule="evenodd"
+                className="text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-600">
+                <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current">
+                  <path fillRule="evenodd"
                     d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z">
                   </path>
                 </svg>
@@ -66,16 +64,16 @@ function Details (props) {
           </div>
           <div className="items-center  md:flex">
             <div
-              class="flex flex-col mt-4 space-y-8 md:flex-row md:items-center md:mt-0 md:space-y-0 md:space-x-16">
-              <Link to="/market" class="block font-medium text-gray-700 hover:text-gray-900 hover:underline">Return Market</Link>
+              className="flex flex-col mt-4 space-y-8 md:flex-row md:items-center md:mt-0 md:space-y-0 md:space-x-16">
+              <Link to="/market" className="block font-medium text-gray-700 hover:text-gray-900 hover:underline">Return Market</Link>
 
               {accountAddress !== ''
-                ? <p
+                ? <div
 
-                  class="flex items-center px-5 py-3 font-medium tracking-wide text-center text-white capitalize bg-blue-600 rounded hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
+                  className="flex items-center px-5 py-3 font-medium tracking-wide text-center text-white capitalize bg-blue-600 rounded hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
                   <Link to="/perfil" style={{ marginRight: '20px', fontSize: '20px' }}>Profile</Link>
                   <Account setAccountAddress={setAccountAddress} />
-                </p>
+                </div>
                 : ''}
             </div>
           </div>
@@ -84,62 +82,62 @@ function Details (props) {
 
       {
         isLoading
-          ? <div class="container px-6 py-10 mx-auto md:py-16">
-            <div class="flex flex-col space-y-6 md:flex-row md:items-center md:space-x-6">
-              <div class="w-full md:w-1/2">
-                <div class="max-w-lg">
-                  <h1 class="text-2xl font-medium tracking-wide text-gray-800 md:text-4xl">
+          ? <div className="container px-6 py-10 mx-auto md:py-16">
+            <div className="flex flex-col space-y-6 md:flex-row md:items-center md:space-x-6">
+              <div className="w-full md:w-1/2">
+                <div className="max-w-lg">
+                  <h1 className="text-2xl font-medium tracking-wide text-gray-800 md:text-4xl">
                   {nft.name}
                   </h1>
-                  <p class="mt-2 text-gray-600">
+                  <p className="mt-2 text-gray-600">
                     owner {nft.owner}
                   </p>
-                  <div class="grid gap-6 mt-8 sm:grid-cols-2">
-                    <div class="flex items-center space-x-6 text-gray-800">
+                  <div className="grid gap-6 mt-8 sm:grid-cols-2">
+                    <div className="flex items-center space-x-6 text-gray-800">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" class="w-5 h-5">
+                        stroke="currentColor" className="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                           d="M5 13l4 4L19 7"></path>
                       </svg>
                       <span>{nft.name}</span>
                     </div>
-                    <div class="flex items-center space-x-6 text-gray-800">
+                    <div className="flex items-center space-x-6 text-gray-800">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" class="w-5 h-5">
+                        stroke="currentColor" className="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                           d="M5 13l4 4L19 7"></path>
                       </svg>
                       <span>Type: {nft.nft_type}</span>
                     </div>
-                    <div class="flex items-center space-x-6 text-gray-800">
+                    <div className="flex items-center space-x-6 text-gray-800">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" class="w-5 h-5">
+                        stroke="currentColor" className="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                           d="M5 13l4 4L19 7"></path>
                       </svg>
                       <span>co2 offset per year : {nft.co2_offset_per_year}</span>
                     </div>
-                    <div class="flex items-center space-x-6 text-gray-800">
+                    <div className="flex items-center space-x-6 text-gray-800">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" class="w-5 h-5">
+                        stroke="currentColor" className="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                           d="M5 13l4 4L19 7"></path>
                       </svg>
                       <span>
                         Tree Description : {nft.tree_description}</span>
                     </div>
-                    <div class="flex items-center space-x-6 text-gray-800">
+                    <div className="flex items-center space-x-6 text-gray-800">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" class="w-5 h-5">
+                        stroke="currentColor" className="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                           d="M5 13l4 4L19 7"></path>
                       </svg>
                       <span>
                       status : {nft.status}</span>
                     </div>
-                    <div class="flex items-center space-x-6 text-gray-800">
+                    <div className="flex items-center space-x-6 text-gray-800">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" class="w-5 h-5">
+                        stroke="currentColor" className="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                           d="M5 13l4 4L19 7"></path>
                       </svg>
@@ -149,7 +147,7 @@ function Details (props) {
                   </div>
                 </div>
               </div>
-              <div class="flex items-center justify-center w-full md:w-1/2">
+              <div className="flex items-center justify-center w-full md:w-1/2">
                 <Locations />
               </div>
             </div>
