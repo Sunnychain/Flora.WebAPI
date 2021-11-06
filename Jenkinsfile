@@ -5,7 +5,8 @@ println "JOB_NAME: " + JOB_NAME
 println "JOB_BASE_NAME " + JOB_BASE_NAME
 println "BUILD_NUMBER: " + BUILD_NUMBER
 
-GIT_SERVER = 'https://git.logrypr.com.br'
+//GIT_SERVER = 'https://git.logrypr.com.br'
+GIT_SERVER = 'https://github.com/KineDevAcademy/flora.web.git'
 GIT_USER_CREDENTIALS = 'cicd-username'
 NEXUS_USER_CREDENTIALS = 'uploader-username'
 APP_NAME = 'flora.api'
@@ -56,7 +57,8 @@ def wipeAllFiles() {
 
 def prepareSCM() {
     stage('Get Sources') {
-      git([url: "${GIT_SERVER}/${DEV_PATH}/${APP_NAME}.git", branch: "${BRANCH_NAME}", credentialsId: "${GIT_USER_CREDENTIALS}"])
+      //git([url: "${GIT_SERVER}/${DEV_PATH}/${APP_NAME}.git", branch: "${BRANCH_NAME}", credentialsId: "${GIT_USER_CREDENTIALS}"])
+      git([url: "${GIT_SERVER}", branch: "${BRANCH_NAME}", credentialsId: "${GIT_USER_CREDENTIALS}"])
     }
 }
 
