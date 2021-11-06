@@ -83,7 +83,7 @@ def startBuild() {
     stage("Build the code") {
       sh """
       export PATH=$PATH:/var/lib/jenkins/.nvm/versions/node/v10.24.1/bin
-      npm install
+      yarn install
       npm start
       """
     }
