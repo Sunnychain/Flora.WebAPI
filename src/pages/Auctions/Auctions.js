@@ -18,12 +18,14 @@ export default function Auctions () {
   }
   return (
     <>
-       <div class=" flex justify-end mt-10">
-        <Link to="/perfil" class="flex mx-10 justify-end">
-          Profile
-        </Link>
-        <AccountSelector setAccountAddress={setAccountAddress} />
-      </div>
+        <div className="flex w-full mt-3 justify-end items-center">
+    {
+    accountAddress !== ''
+      ? <Link to="/profile" className="mr-2">Profile</Link>
+      : ''
+    }
+    <AccountSelector setAccountAddress={setAccountAddress}/>
+    </div>
       <div className="flex flex-col flex-1 w-full overflow-y-auto">
         <main className="relative z-0 flex-1 pb-8 px-6 bg-white">
           <div className="grid pb-10  mt-4 ">
