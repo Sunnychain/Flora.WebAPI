@@ -25,11 +25,20 @@ export function Render (props) {
   const { api, keyring, keyringState } = useSubstrate();
   const { accountAddress } = props;
 
-  const handleCloseNew = () => {
+  const handleCloseNew = async () => {
     setAuctionCreate(false);
     setShowAuction(false);
   };
-  const handleShowSet = (e) => {
+  const handleShowSet = async (e) => {
+    const auction = await api.query.nftMarket.auctionsInfo(e.target.id);
+    const auctionExists = await auction.toHuman();
+    console.log(auctionExists);
+    if (await auctionExists) {
+      if (await auctionExists.nft_id === e.target.id) {
+        alert('This token is already being auctioned');
+        return 1;
+      }
+    }
     setAuctionCreate(false);
     setSelectNft((window.idBotaoClicado = e.target.id));
     setShowAuction(true);
@@ -172,6 +181,14 @@ export function Render (props) {
         isNumber
       );
       try {
+        const auction = await api.query.nftMarket.auctionsInfo(selectNft);
+        const auctionExists = await auction.toHuman();
+        if (await auctionExists) {
+          if (await auctionExists.nft_id === selectNft) {
+            alert('This token is already being auctioned');
+            return 1;
+          }
+        }
         const sign = await send.signAndSend(fromAcct, txResHandler);
         setIsCreate(false);
         setAuctionCreate(true);
@@ -180,6 +197,7 @@ export function Render (props) {
         console.log(e);
       }
     }
+
     return (
       <>
         <tbody className="bg-white">
