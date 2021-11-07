@@ -148,7 +148,7 @@ export function Render (props) {
 
     async function saleNft () {
       const fromAcct = await getFromAcct();
-      const extr = await api.tx.nftMarket.addSale(selectNft, 1);
+      const extr = await api.tx.nftMarket.addSale(selectNft, minPrice);
       const saleExists = await api.query.nftMarket.salesInfo(selectNft);
       const response = await saleExists.toHuman();
       try {
@@ -274,8 +274,17 @@ export function Render (props) {
               </Modal.Header>
               <Modal.Body>
                 {' '}
-                you are about to <strong>SELL</strong> this NFT, do you want to
+                <div role="alert">
+  <div class="bg-red-500 text-white font-bold rounded-t px-4 py-2">
+    Alert
+  </div>
+  <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
+  you are about to <strong>SELL</strong> this NFT, do you want to
                 continue?
+                <input onChange={handleChange} class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="number" placeholder="Value" />
+  </div>
+</div>
+
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>

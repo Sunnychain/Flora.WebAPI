@@ -86,11 +86,11 @@ function Profile (props) {
 
   async function saleNft () {
     const fromAcct = await getFromAcct();
-    const extr = await api.tx.nftMarket.addSale(nftId, targetValue);
-    const saleExists = await api.query.nftMarket.salesInfo(nftId);
-    const response = await saleExists.toHuman();
-
     try {
+      const extr = await api.tx.nftMarket.addSale(nftId, targetValue);
+      console.log(nftId, targetValue);
+      const saleExists = await api.query.nftMarket.salesInfo(nftId);
+      const response = await saleExists.toHuman();
       if (
         (await response) === 'undefined' ||
         response === 'null' ||
@@ -333,7 +333,7 @@ function Profile (props) {
                 required
               />
 
-                 <Button className="w-full my-2" onClick={saleNft}>
+                 <Button className="w-full my-2" onClick={saleNft }>
                 Send
               </Button>
                    <h2>

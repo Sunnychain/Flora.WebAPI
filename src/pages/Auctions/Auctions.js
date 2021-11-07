@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import RenderAuctions from './RenderAuctions';
 import { Link } from 'react-router-dom';
 import { useSubstrate } from '../../substrate-lib';
@@ -7,7 +7,70 @@ import { message, loader } from '../../middlewares/status';
 import 'tailwindcss/tailwind.css';
 export default function Auctions () {
   const [accountAddress, setAccountAddress] = useState(null);
-  const { apiState, keyringState, apiError } = useSubstrate();
+  const [infos, setInfos] = useState([]);
+  const [block, setBlock] = useState('');
+  const [carbon, seCarbon] = useState([]);
+  const [tree, setTotalTree] = useState([]);
+  const { apiState, keyringState, apiError, api } = useSubstrate();
+  useEffect(() => {
+    async function getInfos () {
+      const myArray = [];
+      try {
+        const data = await api.query.tokenNonFungible.nextTokenId();
+
+        const number = await data.toHuman();
+
+        for (let a = 0; a <= number; a += 1) {
+          const res = await api.query.tokenNonFungible.tokens(a);
+          const resHuman = await res.toHuman();
+          myArray.push(resHuman);
+        }
+        const filterArr = myArray.filter(function (val) {
+          return Boolean(val);
+        });
+
+        const numbersCo2 = filterArr.map((val) => {
+          let one = '';
+          one = one + val.co2_offset_per_year;
+          return one;
+        });
+        const dale = [];
+        for (let b = 0; b < numbersCo2.length; b += 1) {
+          const total = +numbersCo2[b].replace(/\D+/g, '');
+          dale.push(total);
+        }
+
+        const total = dale.reduce(function (total, numero) {
+          return total + numero;
+        }, 0);
+
+        const numbersTree = filterArr.map((val) => {
+          let one = '';
+          one = one + val.total_trees;
+          return one;
+        });
+        const treeArr = [];
+        for (let b = 0; b < numbersTree.length; b += 1) {
+          const total = +numbersTree[b].replace(/\D+/g, '');
+          treeArr.push(total);
+        }
+
+        const totalTree = treeArr.reduce(function (total, numero) {
+          return total + numero;
+        }, 0);
+
+        setTotalTree(totalTree);
+        seCarbon(total);
+        setInfos(filterArr);
+        const block = await api.query.system.number();
+        const toHuman = await block.toHuman();
+        setBlock(toHuman);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    getInfos();
+  }, [api, carbon, seCarbon, infos]);
   if (apiState === 'ERROR') return message(apiError);
   else if (apiState !== 'READY') return loader('Connecting to Substrate');
 
@@ -16,6 +79,7 @@ export default function Auctions () {
       "Loading accounts (please review any extension's authorization)"
     );
   }
+
   return (
     <>
         <div className="flex w-full mt-3 justify-end items-center">
@@ -36,7 +100,7 @@ export default function Auctions () {
               <div className="col-span-12 sm:col-span-12 md:col-span-8 lg:col-span-8 xxl:col-span-8">
                 <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 mt-3">
                   <div className="p-4">
-                    <p className="text-xl font-bold">Current</p>
+                    <p className="text-xl font-bold">{infos.length}</p>
                     <p className="text-xs font-semibold text-gray-400">
                       ongoing auctions{' '}
                     </p>
@@ -48,13 +112,13 @@ export default function Auctions () {
                     </p>
                   </div>
                   <div className="p-4">
-                    <p className="text-xl font-bold">0 :P/YEAR</p>
+                    <p className="text-xl font-bold">{carbon} :P/YEAR</p>
                     <p className="text-xs font-semibold text-gray-400">
                       Co2 slaughtered
                     </p>
                   </div>
                   <div className=" p-4">
-                    <p className="text-xl font-bold">0</p>
+                    <p className="text-xl font-bold">{tree}</p>
                     <p className="text-xs font-semibold text-gray-400">
                       Total Tree
                     </p>
@@ -91,7 +155,7 @@ export default function Auctions () {
                       Total Auctions
                     </h3>
                     <h3 className="text-center text-white text-3xl mt-2 font-bold">
-                      0
+                     {infos.length}
                     </h3>
                     <div className="flex space-x-4 mt-4">
                       <Link to="/perfil">
@@ -130,7 +194,7 @@ export default function Auctions () {
                       </div>
                       <p>Current Block</p>
                     </div>
-                    <h3 className="text-white text-3xl mt-2 font-bold">0</h3>
+                    <h3 className="text-white text-3xl mt-2 font-bold">{block}</h3>
                     <h3 className="text-white text-lg mt-2 text-yellow-100 ">
                       block Details
                     </h3>
@@ -167,14 +231,14 @@ export default function Auctions () {
           </div>
         </main>
       </div>
-      <section class="text-gray-600 body-font">
-        <div class="container px-5 py-24 mx-auto">
-          <div class="flex flex-wrap w-full mb-8">
-            <div class="w-full mb-6 lg:mb-0">
-              <h1 class="sm:text-4xl text-5xl font-bold font-medium title-font mb-2 text-gray-900">
+      <section className="text-gray-600 body-font">
+        <div className="container px-5 py-24 mx-auto">
+          <div className="flex flex-wrap w-full mb-8">
+            <div className="w-full mb-6 lg:mb-0">
+              <h1 className="sm:text-4xl text-5xl font-bold font-medium title-font mb-2 text-gray-900">
                 Current Auctions
               </h1>
-              <div class="h-1 w-20 bg-indigo-500 rounded"></div>
+              <div className="h-1 w-20 bg-indigo-500 rounded"></div>
             </div>
           </div>
           {accountAddress ? <RenderAuctions /> : <h1>No Account</h1>}
