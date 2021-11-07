@@ -151,7 +151,7 @@ function AuctionDetails (props) {
     <div className="flex w-full mt-3 justify-end items-center">
     {
     accountAddress !== ''
-      ? <Link to="/profile" className="mr-2">Profile</Link>
+      ? <Link to="/perfil" className="mr-2">Profile</Link>
       : ''
     }
     <Account setAccountAddress={setAccountAddress}/>
