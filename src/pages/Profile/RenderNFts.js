@@ -17,6 +17,7 @@ export function Render (props) {
   const [initial, setInitial] = useState(true);
   const [saleState, setSaleState] = useState(true);
   const [isRender, setIsRender] = useState(false);
+  const [auctionCreate, setAuctionCreate] = useState(false);
   const [isCreate, setIsCreate] = useState(true);
   const [show, setShow] = useState(false);
   const [showAuction, setShowAuction] = useState(false);
@@ -25,9 +26,11 @@ export function Render (props) {
   const { accountAddress } = props;
 
   const handleCloseNew = () => {
+    setAuctionCreate(false);
     setShowAuction(false);
   };
   const handleShowSet = (e) => {
+    setAuctionCreate(false);
     setSelectNft((window.idBotaoClicado = e.target.id));
     setShowAuction(true);
   };
@@ -159,6 +162,7 @@ export function Render (props) {
     }
 
     async function createAuction () {
+      setAuctionCreate(false);
       const fromAcct = await getFromAcct();
       const getBlockNumber = await api.query.system.number();
       const isNumber = await getBlockNumber.toHuman();
@@ -170,7 +174,7 @@ export function Render (props) {
       try {
         const sign = await send.signAndSend(fromAcct, txResHandler);
         setIsCreate(false);
-
+        setAuctionCreate(true);
         return sign;
       } catch (e) {
         console.log(e);
@@ -200,7 +204,10 @@ export function Render (props) {
                 <div className="text-sm leading-5 text-gray-900" key={rs.name}>
                   {rs.name}{' '}
                 </div>
-                <div className="text-sm leading-5 text-gray-500" key={rs.nft_type}>
+                <div
+                  className="text-sm leading-5 text-gray-500"
+                  key={rs.nft_type}
+                >
                   {rs.nft_type}
                 </div>
               </td>
@@ -209,7 +216,10 @@ export function Render (props) {
                   Active
                 </span>
               </td>
-              <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500" key={rs.co2_offset_per_year}>
+              <td
+                className="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500"
+                key={rs.co2_offset_per_year}
+              >
                 Co2 Offset /year: <b>{rs.co2_offset_per_year}</b>
               </td>
 
@@ -305,28 +315,48 @@ export function Render (props) {
           {isCreate
             ? (
             <div>
-              <Modal.Body>
-                {' '}
-                are you sure you create auction this nft?
-                <InputGroup size="lg">
-                  <InputGroup.Text id="inputGroup-sizing-lg">
-                    Price
-                  </InputGroup.Text>
-                  <FormControl
-                    aria-label="Large"
-                    aria-describedby="inputGroup-sizing-sm"
-                    onChange={handleChange}
-                  />
-                </InputGroup>
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant="secondary" onClick={handleCloseNew}>
-                  Close
-                </Button>
-                <Button variant="primary" onClick={createAuction}>
-                  Create Auction
-                </Button>
-              </Modal.Footer>
+              {auctionCreate
+                ? (
+                <div>
+                  <Modal.Body>Auction Created</Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseNew}>
+                      Close
+                    </Button>
+                    <Link
+                      to={`auctions/${selectNft}`}
+                      style={{ color: 'black' }}
+                    >
+                      <Button variant="primary">Go to Auction</Button>
+                    </Link>
+                  </Modal.Footer>
+                </div>
+                  )
+                : (
+                <div>
+                  <Modal.Body>
+                    are you sure you create auction this nft?
+                    <InputGroup size="lg">
+                      <InputGroup.Text id="inputGroup-sizing-lg">
+                        Price
+                      </InputGroup.Text>
+                      <FormControl
+                        aria-label="Large"
+                        aria-describedby="inputGroup-sizing-sm"
+                        onChange={handleChange}
+                      />
+                    </InputGroup>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseNew}>
+                      Close
+                    </Button>
+                    <Button variant="primary" onClick={createAuction}>
+                      Create Auction
+                    </Button>
+                  </Modal.Footer>
+                </div>
+                  )}
             </div>
               )
             : (
@@ -377,7 +407,7 @@ export function Render (props) {
                   />
                 </svg>
               </div>
-              <div className="mx-5">
+              <div className="mx-5 ">
                 <h4 className="text-2xl font-semibold text-gray-700">
                   {accountAddress !== '' ? cont : ''}
                 </h4>
@@ -387,18 +417,30 @@ export function Render (props) {
           </div>
 
           <div className="w-full mt-6 px-6 sm:w-1/2 xl:w-1/3 xl:mt-0">
-            <div
-              className="flex items-center px-8 py-1 shadow-sm rounded-md bg-white"
-              style={{ width: '340px' }}
-            >
+            <div className="flex items-center px-8 py-1 shadow-sm rounded-md bg-white">
               <div className="p-3 rounded-full bg-white-200 bg-opacity-75">
-                <img src={Token} style={{ width: '200px' }} alt="token" />
+                <img src={Token} style={{ width: '120px' }} alt="token" />
               </div>
               <div className="mx-5">
                 <h4 className="text-2xl font-semibold text-gray-700">
                   {accountAddress !== '' ? cont : ''}
                 </h4>
                 <div className="text-gray-500">Tokens</div>
+              </div>
+            </div>
+          </div>
+          <div className="w-full px-6 sm:w-1/2 xl:w-1/3">
+            <div className="flex items-center px-5 py-2 shadow-sm rounded-md bg-white">
+              <div className="p-3 rounded-full  bg-opacity-75">
+                <img
+                  style={{ width: '60px' }}
+                  src="https://i.imgur.com/wYT7bZq.png"
+                  alt="flora"
+                />
+              </div>
+              <div className="mx-5">
+                <h4 className="text-2xl font-semibold text-gray-700">12</h4>
+                <div className="text-gray-500">Rank</div>
               </div>
             </div>
           </div>

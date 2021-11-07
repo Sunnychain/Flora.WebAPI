@@ -8,7 +8,6 @@ import NFT from '../../Website/img/simbolo-RMTerra.png';
 import FEMALE from '../../Website/img/mascote-feminina-FLORA.png';
 import MALE from '../../images/tree.png';
 import DONATE from '../../Website/img/maosemente.png';
-import PROJECT from '../../images/style-flor-black.png';
 import ABOUT from '../../Website/img/Nft MArket Flora.png';
 
 import './Home.scss';
