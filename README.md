@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Getting Started 
 
 First compile the substrate First: Cargo run --release -- --dev --tmp
