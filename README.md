@@ -12,7 +12,3 @@ In the project directory, you can run:
 
 ### `Flora app v.0.0.2`
 
-=======
-
-incluir descricao do projeto
->>>>>>> c1679a9480c49e3659fe818acd5b4f2dd58b5b2a
