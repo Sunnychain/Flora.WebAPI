@@ -15,6 +15,7 @@ export default function Auctions () {
   useEffect(() => {
     async function getInfos () {
       const myArray = [];
+      const myAuction = [];
       try {
         const data = await api.query.tokenNonFungible.nextTokenId();
 
@@ -28,6 +29,12 @@ export default function Auctions () {
         const filterArr = myArray.filter(function (val) {
           return Boolean(val);
         });
+
+        for (let a = 0; a <= number; a += 1) {
+          const res = await api.query.nftMarket.auctionsInfo(a);
+          const resHuman = await res.toHuman();
+          myAuction.push(resHuman);
+        }
 
         const numbersCo2 = filterArr.map((val) => {
           let one = '';
@@ -59,9 +66,13 @@ export default function Auctions () {
           return total + numero;
         }, 0);
 
+        const filterAuction = myAuction.filter(function (val) {
+          return Boolean(val);
+        });
+
         setTotalTree(totalTree);
         seCarbon(total);
-        setInfos(filterArr);
+        setInfos(filterAuction);
         const block = await api.query.system.number();
         const toHuman = await block.toHuman();
         setBlock(toHuman);
@@ -70,7 +81,7 @@ export default function Auctions () {
       }
     }
     getInfos();
-  }, [api, carbon, seCarbon, infos]);
+  }, [api, carbon, seCarbon]);
   if (apiState === 'ERROR') return message(apiError);
   else if (apiState !== 'READY') return loader('Connecting to Substrate');
 

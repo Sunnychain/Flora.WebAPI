@@ -173,12 +173,10 @@ export function Render (props) {
     async function createAuction () {
       setAuctionCreate(false);
       const fromAcct = await getFromAcct();
-      const getBlockNumber = await api.query.system.number();
-      const isNumber = await getBlockNumber.toHuman();
       const send = await api.tx.nftMarket.createAuction(
         selectNft,
         minPrice,
-        isNumber
+        2
       );
       try {
         const auction = await api.query.nftMarket.auctionsInfo(selectNft);
@@ -265,7 +263,8 @@ export function Render (props) {
           ))}
         </tbody>
 
-        <Modal show={show} onHide={handleClose}>
+        <Modal show={show} onHide={handleClose} backdrop="static"
+        keyboard={false}>
           {saleState && initial
             ? (
             <div className={initial ? 'end' : ''}>
