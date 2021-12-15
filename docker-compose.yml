@@ -1,0 +1,16 @@
+version: "3.5"
+
+services:
+  app-flora_web:
+    stdin_open: true
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: flora_web
+    #command: yarn start
+    restart: always
+    ports:
+      - "3000:80"
+    volumes:
+      - "/app/floraweb/node_modules"
+      - "./:/app/floraweb"
