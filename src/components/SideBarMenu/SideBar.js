@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 function SideBar (props) {
-  const { setRenderSelect } = props;
+  const {setRenderSelect} = props;
   const handleClick = (e) => {
     setRenderSelect(e.target.id);
   };
@@ -51,7 +51,7 @@ function SideBar (props) {
                 </li>
                 <li className="flex w-full justify-between text-gray-200 hover:text-white hover:bg-green-300 cursor-pointer items-center px-8 py-3">
                   <Link
-                    to="/quests"
+                    to="/quest"
                     className="flex items-center  rounded focus:outline-none focus:ring-2 focus:ring-white"
                   >
                     <i className="fas fa-2x fa-chalkboard-teacher"></i>

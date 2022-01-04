@@ -8,8 +8,7 @@ import Auctions from '../AuctionsMarket/AuctionsRender';
 import NftMarket from '../NFTMarketRender/NftMarket';
 import SideBar from '../../components/SideBarMenu/SideBar';
 import './Home.scss';
-
-export default function Home (props) {
+export default function Home(props) {
   const [accountAddress, setAccountAddress] = useState(null);
   const [infos, setInfos] = useState([]);
   const [carbon, setCarbon] = useState([]);
@@ -18,7 +17,7 @@ export default function Home (props) {
   const [nftSale, setNftSale] = useState([]);
   const { apiState, keyringState, apiError, api } = useSubstrate();
   const [renderSelect, setRenderSelect] = useState('');
- 
+
   useEffect(() => {
     const rendeAuctions = async () => {
       try {
@@ -42,7 +41,7 @@ export default function Home (props) {
         console.log(e);
       }
     };
-    async function getInfos () {
+    async function getInfos() {
       const myArray = [];
       const myAuction = [];
       try {
@@ -75,13 +74,13 @@ export default function Home (props) {
           one = one + val.co2_offset_per_year;
           return one;
         });
-        const numberCo2 = [];
+        const dale = [];
         for (let b = 0; b < numbersCo2.length; b += 1) {
           const total = +numbersCo2[b].replace(/\D+/g, '');
-          numberCo2.push(total);
+          dale.push(total);
         }
 
-        const total = numberCo2.reduce(function (total, numero) {
+        const total = dale.reduce(function (total, numero) {
           return total + numero;
         }, 0);
 
@@ -241,7 +240,7 @@ export default function Home (props) {
                             <h5 className="text-blueGray-400 uppercase font-bold text-xs">
                               Auctions
                             </h5>
-                            {infos.length > 0 ?
+                            {infos.length > 0 ? 
                               <span className="font-semibold text-xl text-blueGray-700">
                                 {infos.length}
                               </span>
@@ -271,7 +270,7 @@ export default function Home (props) {
             {renderSelect === '2' ? <NftMarket /> : ''}
             {renderSelect === '1' ? <Auctions infos={infos} /> : ''}
             {renderSelect !== '1' && renderSelect !== '2' && isOnloadNft ?
-              <Initial nftSale={nftSale} infos={infos} />
+              <Initial nftSale={nftSale} infos={infos}/>
               : ''
             }
           </div>

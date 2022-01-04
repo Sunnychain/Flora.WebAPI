@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { useSubstrate } from '../substrate-lib';
+import React from 'react';
 import './css/styles.css';
 import './js/scripts';
 import logoFlora from './img/logo-flora.png';
@@ -10,6 +9,19 @@ import demoImage2 from './assets/img/demo-image-02.jpg';
 function WebSite () {
   return (
       <div>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content />
+        <meta name="author" content />
+        <title>Grayscale - Start Bootstrap Theme</title>
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        {/* Font Awesome icons (free version) */}
+        {/* Google fonts */}
+        <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
+        {/* Core theme CSS (includes Bootstrap) */}
+        <link href="css/styles.css" rel="stylesheet" />
+        {/* Navigation */}
         <nav className="navbar navbar-expand-lg fixed-top navbar-light" id="mainNav">
           <div className="container px-4 px-lg-5">
             <img src={logoFlora} width={200} height={70} alt="" /><a className="navbar-brand" href="#page-top">&nbsp;</a>
@@ -28,6 +40,7 @@ function WebSite () {
             </div>
           </div>
         </nav>
+        {/* Masthead */}
         <header className="masthead" id="flora">
           <div className="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
             <div className="d-flex justify-content-center">
@@ -71,6 +84,7 @@ function WebSite () {
             </div>
           </div>
         </section>
+        {/* About */}
         <section className="about-section text-center ogham-section" id="ogham">
           <div className="container px-4 px-lg-5">
             <div className="row gx-4 gx-lg-5 justify-content-center">
@@ -85,8 +99,10 @@ function WebSite () {
             <img className="img-fluid" src={idap} alt="..." />
           </div>
         </section>
+        {/* Projects */}
         <section className="projects-section bg-light" id="nftmarket">
           <div className="container px-4 px-lg-5">
+            {/* Featured Project Row */}
             <div className="row gx-0 mb-4 mb-lg-5 align-items-center">
               <div className="col-xl-8 col-lg-7"><img src={roadmap} alt="..." width={1000} className="img-fluid mb-3" /></div>
               <div className="col-xl-4 col-lg-5">
@@ -135,13 +151,25 @@ function WebSite () {
               <div className="col-md-10 col-lg-8 mx-auto text-center">
                 <i className="far fa-paper-plane fa-2x mb-2 text-white" />
                 <h2 className="text-white mb-5">Subscribe to receive updates!</h2>
+                {/* * * * * * * * * * * * * * * **/}
+                {/* * * SB Forms Contact Form * **/}
+                {/* * * * * * * * * * * * * * * **/}
+                {/* This form is pre-integrated with SB Forms. */}
+                {/* To make this form functional, sign up at */}
+                {/* https://startbootstrap.com/solution/contact-forms */}
+                {/* to get an API token! */}
                 <form className="form-signup" id="contactForm" data-sb-form-api-token="API_TOKEN">
+                  {/* Email address input */}
                   <div className="row input-group-newsletter">
                     <div className="col"><input className="form-control" id="emailAddress" type="email" placeholder="Enter email address..." aria-label="Enter email address..." data-sb-validations="required,email" /></div>
                     <div className="col-auto"><button className="btn btn-primary disabled" id="submitButton" type="submit">Notify Me!</button></div>
                   </div>
                   <div className="invalid-feedback mt-2" data-sb-feedback="emailAddress:required">An email is required.</div>
                   <div className="invalid-feedback mt-2" data-sb-feedback="emailAddress:email">Email is not valid.</div>
+                  {/* Submit success message */}
+                  {/**/}
+                  {/* This is what your users will see when the form */}
+                  {/* has successfully submitted */}
                   <div className="d-none" id="submitSuccessMessage">
                     <div className="text-center mb-3 mt-2 text-white">
                       <div className="fw-bolder">Form submission successful!</div>

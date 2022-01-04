@@ -1,0 +1,42 @@
+{
+  "files": {
+    "main.css": "/static/css/main.0bdd338e.chunk.css",
+    "main.js": "/static/js/main.f2120e64.chunk.js",
+    "main.js.map": "/static/js/main.f2120e64.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.2138c0dd.js",
+    "runtime-main.js.map": "/static/js/runtime-main.2138c0dd.js.map",
+    "static/css/2.938f674e.chunk.css": "/static/css/2.938f674e.chunk.css",
+    "static/js/2.97323502.chunk.js": "/static/js/2.97323502.chunk.js",
+    "static/js/2.97323502.chunk.js.map": "/static/js/2.97323502.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.938f674e.chunk.css.map": "/static/css/2.938f674e.chunk.css.map",
+    "static/css/main.0bdd338e.chunk.css.map": "/static/css/main.0bdd338e.chunk.css.map",
+    "static/js/2.97323502.chunk.js.LICENSE.txt": "/static/js/2.97323502.chunk.js.LICENSE.txt",
+    "static/js/main.f2120e64.chunk.js.LICENSE.txt": "/static/js/main.f2120e64.chunk.js.LICENSE.txt",
+    "static/media/styles.css": "/static/media/imagens-SITE-5.0d7ae56b.png",
+    "static/media/globalStyle.scss": "/static/media/style-flr.461b33bd.png",
+    "static/media/RoadMap.e10912b1.png": "/static/media/RoadMap.e10912b1.png",
+    "static/media/about.scss": "/static/media/tree.9e5b7f28.png",
+    "static/media/semantic.min.css": "/static/media/outline-icons.ddae9b1b.woff",
+    "static/media/demo-image-01.cc9d2e3e.jpg": "/static/media/demo-image-01.cc9d2e3e.jpg",
+    "static/media/demo-image-02.75d646b9.jpg": "/static/media/demo-image-02.75d646b9.jpg",
+    "static/media/flora.2ea3751a.svg": "/static/media/flora.2ea3751a.svg",
+    "static/media/Description.scss": "/static/media/imagens-SITE-4.6583d02d.png",
+    "static/media/Auctions.scss": "/static/media/imagens-SITE-7.c6a554b7.png",
+    "static/media/ipad.d9c10e6d.png": "/static/media/ipad.d9c10e6d.png",
+    "static/media/market.scss": "/static/media/walpapper.a5ffc4b1.png",
+    "static/media/min_Flora-black.170042cf.png": "/static/media/min_Flora-black.170042cf.png",
+    "static/media/nft.ca9fc58c.png": "/static/media/nft.ca9fc58c.png",
+    "static/media/profile.22601339.png": "/static/media/profile.22601339.png",
+    "static/media/tree-planted.6aa0e1e8.png": "/static/media/tree-planted.6aa0e1e8.png",
+    "static/media/tree-rem.c57571dd.png": "/static/media/tree-rem.c57571dd.png",
+    "static/media/Home.scss": "/static/media/web-site.fae8585b.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.2138c0dd.js",
+    "static/css/2.938f674e.chunk.css",
+    "static/js/2.97323502.chunk.js",
+    "static/css/main.0bdd338e.chunk.css",
+    "static/js/main.f2120e64.chunk.js"
+  ]
+}

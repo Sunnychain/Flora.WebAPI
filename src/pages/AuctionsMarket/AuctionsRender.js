@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import FEMALE from '../../Website/img/mascote-feminina-FLORA.png';
 export default function NftMarket (props) {
   const { infos } = props;
   return (
@@ -26,37 +27,59 @@ export default function NftMarket (props) {
                       <thead>
                         <tr>
                           <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                            Current Price
+                            Tree Name
                           </th>
                           <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                            Total Bid
+                            Current Bid
                           </th>
                           <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                            Last Bidder
+                            Status
                           </th>
                           <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                            Time Blocks
+                            Total Orders
                           </th>
-
-                         </tr>
+                          <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                            Time
+                          </th>
+                          <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100" />
+                        </tr>
                       </thead>
                       <tbody>
                         {
                           infos.map((a) => (
                             <tr>
                             <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                              <img
+                                src={FEMALE}
+                                className="h-12 w-12 bg-white rounded-full border"
+                                alt="..."
+                              />
                               <span className="ml-3 font-bold text-blueGray-600">
-                              ${a.current_price}
+                                Tree Name
                               </span>
                             </th>
                             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                              {a.num_bid}
+                              $2,500 USD
                             </td>
                             <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            {a.last_bidder}
+                              <i className="fas fa-circle text-orange-500 mr-2" />
+                              pending
                             </td>
                             <td className="border-t-0 px-6 text-center border-l-0 border-r-0 text-lg  p-4">
-                              {a.end_block}
+                              2
+                            </td>
+                            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                              <div className="flex items-center">
+                                <span className="mr-2">60%</span>
+                                <div className="relative w-full">
+                                  <div className="overflow-hidden h-2 text-xs flex rounded bg-red-200">
+                                    <div
+                                      style={{ width: '60%' }}
+                                      className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
                             </td>
                           </tr>
                           ))
