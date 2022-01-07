@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { web3FromSource } from '@polkadot/extension-dapp';
 import { useSubstrate } from '../../substrate-lib';
-
-import TOKEN from '../../images/style-flr-rem.png';
 import { Link } from 'react-router-dom';
 import Account from '../../components/AccountSelector';
 import { message, loader } from '../../middlewares/status';
-import flora from '../../images/tree.png';
+import flora from '../../images/tree-rem.png';
 import FEMALE from '../../Website/img/mascote-feminina-FLORA.png';
+import './Auctions.scss';
 function AuctionDetails (props) {
   const [isLoading, setLoading] = useState(false);
   const [idAuction, setAuctionId] = useState([]);
+  const [token, setTokenInfo] = useState([]);
   const [sendBid, setSendBid] = useState(true);
   const [messageToken, setMessage] = useState('');
   const [auctionDetails, setAuctionDetails] = useState({});
@@ -28,8 +28,21 @@ function AuctionDetails (props) {
   useEffect(() => {
     setAccountSelected(accountAddress);
     const tokenId = props.match.params.id;
-
     setAuctionId(tokenId);
+    async function getTokenInfo () {
+      const tokenInfo = [];
+      try {
+        const data = await api.query.tokenNonFungible.tokens(tokenId);
+        const res = await data.toHuman();
+        tokenInfo.push(res);
+        setLoading(true);
+      } catch (e) {}
+
+      const filterArr = tokenInfo.filter(function (val) {
+        return Boolean(val);
+      });
+      setTokenInfo(filterArr);
+    }
     async function getToken () {
       try {
         const myArray = [];
@@ -41,11 +54,12 @@ function AuctionDetails (props) {
           return Boolean(val);
         });
         setAuctionDetails(filterArr);
-        setLoading(true);
+        await getTokenInfo();
       } catch (e) {
         console.log(e);
       }
     }
+
     getToken();
   }, [
     messageToken,
@@ -56,9 +70,9 @@ function AuctionDetails (props) {
   ]);
 
   async function getToken () {
-    setSendBid(false);
     setLoading(false);
     try {
+      setSendBid(false);
       const myArray = [];
       const ownerInfoToken = await api.query.nftMarket.auctionsInfo(idAuction);
       const details = await ownerInfoToken.toHuman();
@@ -111,9 +125,8 @@ function AuctionDetails (props) {
   }
 
   const txResHandler = ({ status }) => {
-    setSendBid(false);
     if (status.isFinalized) {
-      setSendBid(true);
+      console.log(status.type);
     }
     setMessage(status.type);
   };
@@ -133,96 +146,156 @@ function AuctionDetails (props) {
 
   return (
     <>
-      <div class=" flex justify-end mt-10">
-        <Link to="/perfil" class="flex mx-10 justify-end">
-          Profile
-        </Link>
-        <Account setAccountAddress={setAccountAddress} />
-      </div>
-      <div class="flex justify-center items-center ">
-        <div class="container mx-auto mt-10 mb-10 lg:mb-40 lg:px-20">
-          <div class="relative w-full my-4 lg:w-9/12 mr-auto rounded-2xl shadow-2xl">
-            <img
-              alt="Card"
-              src={flora}
-              class="max-w-full rounded-lg shadow-lg"
-            />
-          </div>
+<div className="flora">
+    <div className="flex w-full mt-3  justify-end items-center " >
+    {
+    accountAddress !== ''
+      ? <Link to="/perfil" className="mr-2">Profile</Link>
+      : ''
+    }
+    <Account setAccountAddress={setAccountAddress}/>
+    </div>
 
-          {isLoading && sendBid
-            ? (
-                auctionDetails.map((val) => (
-              <div
-                id="setTime"
-                class="relative w-full lg:-mt-96 lg:w-3/6 p-8 ml-auto bg-green-800 rounded-2xl z-50"
-              >
-                <div class="flex flex-col text-white">
-                  <div>
-                    <img class="w-80 " src={TOKEN} alt="" />
-                  </div>
-                  <p class="text-white  px-2">Last bid address: {val.last_bidder === accountSelected ? <h1>You</h1> : val.last_bidder}</p>
-                  <p class="text-white px-2 mb-8">
-                    Last bid value: {val.current_price}
-                  </p>
-                  <div class="flex justify-between pl-2">
-                    <h3 class="font-bold ">
-                      Current Price: {val.current_price}
-                    </h3>
-                  </div>
+      {isLoading && token.length > 0
+        ? (
+        <section className="body-font overflow-hidden" >
+
+       <Link to="/auctions" style={{ fontSize: '15px' }}>Return Market</Link>
+          <div className="container px-5 py-24 mx-auto">
+
+            <div className="lg:w-4/5 mx-auto flex flex-wrap mt-20">
+              <img
+                alt="flora"
+                className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded "
+
+                src={flora}
+              />
+              <div className="lg:w-1/2 w-full lg:pl-10 lg:pt-6 mt-6 lg:mt-0">
+                <h1 className=" title-font  tracking-widest">
+                  {token[0].nft_type}
+                </h1>
+                <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
+                  {token[0].name}
+                </h1>
+                <div className="flex mb-4">
+                  <span className="flex items-center">
+                    <svg
+                      fill="currentColor"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      className="w-4 h-4 text-indigo-500"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                    </svg>
+                    <svg
+                      fill="currentColor"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      className="w-4 h-4 text-indigo-500"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                    </svg>
+                    <svg
+                      fill="currentColor"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      className="w-4 h-4 text-indigo-500"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                    </svg>
+                    <svg
+                      fill="currentColor"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      className="w-4 h-4 text-indigo-500"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                    </svg>
+                    <svg
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      className="w-4 h-4 text-indigo-500"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                    </svg>
+                    <h2 className="text-gray-600 ml-3 pb-8">
+                      number bids: {auctionDetails[0].num_bid}{' '}
+                    </h2>
+                  </span>
                 </div>
-                <form>
-                  <input
-                    value={value}
+                <p className="leading-relaxed">
+                  Description: {token[0].tree_description}
+                </p>
+                <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
+                  <div className="flex">
+                    <span className="mr-5 pt-2">Active</span>
+                    <button
+                      className="border-2 border-gray-300 rounded-full w-full h-full focus:outline-none"
+                      style={{ fontSize: '30px' }}
+                    >
+                      <b>Current: {auctionDetails[0].current_price}</b>
+                    </button>
+
+                  </div>
+
+                </div>
+                <p>Last Bidder: {auctionDetails[0].last_bidder === accountSelected ? <h3>You</h3> : <h3>{auctionDetails[0].last_bidder}</h3> }</p>
+                {sendBid
+                  ? <div className="flex">
+
+                  {
+                    auctionDetails[0].owner === accountSelected
+                      ? <h2>You cannot place a bid as you are the owner of the auction</h2>
+                      : <div>
+                           <span className="title-font font-medium text-2xl text-gray-900">
+                       <input
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    placeholder="value offer"
                     onChange={getValue}
-                    placeholder="bid value"
-                    className="justify-start uppercase my-2   focus:shadow-outline focus:outline-none  py-3 px-4 rounded font-bold "
+                    type="number"
                   />
 
-                  <button
-                    type="button"
-                    onClick={bidSend}
-                    className="justify-start uppercase my-2 shadow bg-green-800 hover:bg-indigo-700 focus:shadow-outline focus:outline-none text-white w rounded font-bold mx-2 w-20 py-3"
-                  >
-                    Bid
+                    <button className="w-full mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={bidSend}>
+                    Send Bid
                   </button>
-                </form>
-              </div>
-                ))
-              )
-            : (
-            <div
-              id="setTime"
-              class="relative w-full lg:-mt-96 lg:w-3/6 p-8 ml-auto bg-green-800 rounded-2xl z-50"
-            >
-              <div class="flex flex-col text-white">
-                <div>
-                  <img class="w-80 " src={FEMALE} alt="" />
+                  </span>
+                    </div>
+
+                  }
+
+                    <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4" >
+                    <img src={FEMALE} alt="flora" />
+                  </button>
+
                 </div>
-                <p class="text-white  px-2">Bid Status</p>
-                <p class="text-white px-2 mb-8"></p>
-                <div class="flex justify-between pl-2">
-                  <h3 class="font-bold ">{messageToken}</h3>
-                </div>
+                  : <p>Status:{ messageToken }</p>
+                  }
+
               </div>
             </div>
-              )}
-        </div>
-      </div>
-
-      <div class="flex items-end justify-end fixed bottom-0 right-0 mb-4 mr-4 z-10">
-        <div>
-          <Link
-            to="/auctions"
-            class="block w-16 h-16 rounded-full transition-all shadow hover:shadow-lg transform hover:scale-110 hover:rotate-12"
-          >
-            <img
-              class="object-cover object-center w-full h-full rounded-full"
-              src={FEMALE}
-              alt="Flora"
-            />
-          </Link>
-        </div>
-      </div>
+          </div>
+        </section>
+          )
+        : (
+            ''
+          )}
+</div>
     </>
   );
 }

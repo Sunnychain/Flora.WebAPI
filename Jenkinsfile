@@ -5,7 +5,12 @@ println "JOB_NAME: " + JOB_NAME
 println "JOB_BASE_NAME " + JOB_BASE_NAME
 println "BUILD_NUMBER: " + BUILD_NUMBER
 
+<<<<<<< HEAD
 GIT_SERVER = 'https://git.logrypr.com.br'
+=======
+//GIT_SERVER = 'https://git.logrypr.com.br'
+GIT_SERVER = 'https://github.com/KineDevAcademy/flora.web.git'
+>>>>>>> d408a5d178ce23d6c0a9fd4e91c54b79d57fbcd0
 GIT_USER_CREDENTIALS = 'cicd-username'
 NEXUS_USER_CREDENTIALS = 'uploader-username'
 APP_NAME = 'flora.api'
@@ -56,7 +61,12 @@ def wipeAllFiles() {
 
 def prepareSCM() {
     stage('Get Sources') {
+<<<<<<< HEAD
       git([url: "${GIT_SERVER}/${DEV_PATH}/${APP_NAME}.git", branch: "${BRANCH_NAME}", credentialsId: "${GIT_USER_CREDENTIALS}"])
+=======
+      //git([url: "${GIT_SERVER}/${DEV_PATH}/${APP_NAME}.git", branch: "${BRANCH_NAME}", credentialsId: "${GIT_USER_CREDENTIALS}"])
+      git([url: "${GIT_SERVER}", branch: "${BRANCH_NAME}", credentialsId: "${GIT_USER_CREDENTIALS}"])
+>>>>>>> d408a5d178ce23d6c0a9fd4e91c54b79d57fbcd0
     }
 }
 
@@ -81,7 +91,11 @@ def startBuild() {
     stage("Build the code") {
       sh """
       export PATH=$PATH:/var/lib/jenkins/.nvm/versions/node/v10.24.1/bin
+<<<<<<< HEAD
       npm install
+=======
+      yarn install
+>>>>>>> d408a5d178ce23d6c0a9fd4e91c54b79d57fbcd0
       npm start
       """
     }

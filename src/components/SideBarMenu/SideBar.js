@@ -1,80 +1,93 @@
 import React from 'react';
-import { Icon } from '@iconify/react';
-import NFT from '../../Website/img/simbolo-RMTerra.png';
 import { Link } from 'react-router-dom';
-function SideBar () {
+function SideBar (props) {
+  const {setRenderSelect} = props;
+  const handleClick = (e) => {
+    setRenderSelect(e.target.id);
+  };
   return (
     <>
-      <nav id='sidebar' className='sidebar-wrapper' >
-        <div className="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-50 text-gray-800" >
-          <div className="fixed flex flex-col top-0 left-0 w-80  right-20 h-full  bg-white">
-            <div className="flex items-center justify-center h-14 border-b" style={{ marginTop: '12px' }}>
-              <div><Link to="/app"> Flora Network</Link></div>
-            </div>
-            <div className="overflow-y-auto overflow-x-hidden flex-grow" >
-              <ul className="flex flex-col py-4 space-y-1">
-                <li style={{ marginTop: '30px' }}>
-                  <Link to="/" className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6">
-                    <Icon icon="healthicons:home" width="30" />
-                    <span className="ml-2 text-sm tracking-wide truncate">Home</span>
+       <nav className="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-gray-200 flex flex-wrap items-center justify-between relative md:w-auto z-10 py-4 px-2">
+            <div className="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center   mx-auto text">
+              <ul className="mt-12 ">
+                <li className="flex w-full justify-between text-white hover:bg-green-300  cursor-pointer items-center py-3 px-8 " id="0" onClick={handleClick}>
+                  <Link
+                    to="#"
+                    className="flex items-center  rounded focus:outline-none focus:ring-2 focus:ring-green-800"
+                    onClick={handleClick}
+                    id="0"
+                  >
+                    <i className="fas fa-2x fa-home" />
+                    <span className="text-sm ml-2" id="0" onClick={handleClick}>
+                      Home
+                    </span>
                   </Link>
                 </li>
-                <li>
-                  <Link to="/market" className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6">
-
-                    <img src={NFT} width="30px" alt="token"/>
-
-                    <span className="ml-2 text-sm tracking-wide truncate">NFT Makert</span>
-                    <span className="px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-indigo-500 bg-indigo-50 rounded-full">New</span>
+                <li className="flex w-full justify-between text-gray-200 hover:text-white hover:bg-green-300 cursor-pointer items-center px-8 py-3" id="2" onClick={handleClick}>
+                  <Link
+                    to="#"
+                    className="flex items-center  rounded focus:outline-none focus:ring-2 focus:ring-white"
+                    onClick={handleClick}
+                    id="2"
+                  >
+                    <i className="fas fa-2x fa-store" id="2" onClick={handleClick}/>
+                    <span className="text-sm ml-2" id="2" onClick={handleClick}>
+                      Market
+                    </span>
                   </Link>
                 </li>
-                <li>
-                  <Link to="/auctions" className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6">
-                    <Icon icon="ri:auction-line" width="30" />
-                    <span className="ml-2 text-sm tracking-wide truncate">Auctions</span>
+                <li className="flex w-full justify-between text-gray-200 hover:text-white hover:bg-green-300 cursor-pointer items-center px-8 py-3" id="1" onClick={handleClick}>
+                  <Link
+                    to="#"
+                    className="flex items-center  rounded focus:outline-none focus:ring-2 focus:ring-white"
+                    id="1"
+                    onClick={handleClick}
+                  >
+                    <i className="fas fa-2x fa-gavel" id="1" onClick={handleClick} />
+                    <span className="text-sm ml-2" id="1" onClick={handleClick}>
+                      Auctions
+                    </span>
                   </Link>
                 </li>
-
-                <li className="px-5">
-                  <div className="flex flex-row items-center h-8">
-                    <div className="text-sm font-light tracking-wide text-gray-500">About</div>
-                  </div>
-                </li>
-                <li >
-                  <Link to="/" className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6">
-                    <Icon icon="emojione:film-projector" width="30" />
-                    <span className="ml-2 text-sm tracking-wide truncate">What is Flora Network</span>
+                <li className="flex w-full justify-between text-gray-200 hover:text-white hover:bg-green-300 cursor-pointer items-center px-8 py-3">
+                  <Link
+                    to="/quest"
+                    className="flex items-center  rounded focus:outline-none focus:ring-2 focus:ring-white"
+                  >
+                    <i className="fas fa-2x fa-chalkboard-teacher"></i>
+                    <span className="text-sm ml-2">Tutorial</span>
                   </Link>
                 </li>
-                <li>
-                  <Link to="#" className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6">
-                    <Icon icon="grommet-icons:gallery" width="30" />
-                    <span className="ml-2 text-sm tracking-wide truncate">Gallery</span>
-                    <span className="px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-green-500 bg-green-50 rounded-full">15</span>
+                <li className="flex w-full justify-between text-gray-200 hover:text-white hover:bg-green-300 cursor-pointer items-center px-8 py-3">
+                  <Link
+                    to="#"
+                    className="flex items-center rounded focus:outline-none focus:ring-2 focus:ring-white"
+                  >
+                    <i className="fas fa-2x fa-camera-retro"></i>
+                    <span className="text-sm ml-2">Gallery</span>
                   </Link>
                 </li>
-                <li className="px-5">
-                  <div className="flex flex-row items-center h-8">
-                    <div className="text-sm font-light tracking-wide text-gray-500">support flora network</div>
-                  </div>
-                </li>
-                <li>
-                  <Link to="#" className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6">
-                    <Icon icon="bx:bx-donate-heart" width="30" />
-                    <span className="ml-2 text-sm tracking-wide truncate">Donation</span>
+                <li className="flex w-full justify-between text-gray-200 hover:text-white hover:bg-green-300 cursor-pointer items-center px-8 py-3">
+                  <Link
+                    to="#"
+                    className="flex items-center  rounded focus:outline-none focus:ring-2 focus:ring-white"
+                  >
+                    <i className="fab fa-2x fa-leanpub"></i>
+                    <span className="text-sm ml-2">About</span>
                   </Link>
                 </li>
-                <li>
-                  <Link to="#" className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6">
-                    <Icon icon="ps:people-team" width="30" />
-                    <span className="ml-2 text-sm tracking-wide truncate">Team</span>
+                <li className="flex w-full justify-between text-gray-200 hover:text-white hover:bg-green-300 cursor-pointer items-center px-8 py-3">
+                  <Link
+                    to="#"
+                    className="flex items-center  rounded focus:outline-none focus:ring-2 focus:ring-white"
+                  >
+                    <i className="fas fa-2x fa-cog"></i>
+                    <span className="text-sm ml-2">Settings</span>
                   </Link>
                 </li>
               </ul>
             </div>
-          </div>
-        </div>
-      </nav>
+          </nav>
     </>
   );
 }

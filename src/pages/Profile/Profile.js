@@ -1,40 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import AccountSelector from '../../components/AccountSelector';
-import Modal from 'react-bootstrap/Modal';
-import { web3FromSource } from '@polkadot/extension-dapp';
-import Button from 'react-bootstrap/Button';
-import { Render } from './RenderNFts';
-import { useSubstrate } from '../../substrate-lib';
-import { message, loader } from '../../middlewares/status';
-import 'tailwindcss/tailwind.css';
-import Logo from '../../images/tree-rem.png';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import AccountSelector from "../../components/AccountSelector";
+import Modal from "react-bootstrap/Modal";
+import { web3FromSource } from "@polkadot/extension-dapp";
+import Button from "react-bootstrap/Button";
+import { Render } from "./RenderNFts";
+import { useSubstrate } from "../../substrate-lib";
+import { message, loader } from "../../middlewares/status";
+import Logo from "../../images/tree-rem.png";
+import "tailwindcss/tailwind.css";
 
-function Profile (props) {
+function Profile(props) {
   const [accountAddress, setAccountAddress] = useState(null);
-  const [accountSelected, setAccountSelected] = useState('');
-  const [value, setValue] = useState('');
+  const [accountSelected, setAccountSelected] = useState("");
+  const [value, setValue] = useState("");
   const [nft, setNft] = useState([]);
-  const [targetValue, setTargetValue] = useState('');
-  const [nftId, setNftId] = useState('');
-  const [status, setStatus] = useState('');
-  const [render, setRender] = useState(true);
+  const [targetValue, setTargetValue] = useState("");
+  const [nftId, setNftId] = useState("");
+  const [status, setStatus] = useState("");
   const [showAuction, setShowAuction] = useState(false);
   const { api, apiState, keyringState, apiError, keyring } = useSubstrate();
 
   useEffect(() => {
-    if (accountAddress === '') {
-      return null;
-    }
     setAccountSelected(accountAddress);
-    async function getTokens () {
+    async function getTokens() {
       const MyArray = [];
-      if (accountSelected && accountSelected !== '') {
+      if (accountSelected && accountSelected !== "") {
         try {
           const number = await api.query.tokenNonFungible.nextTokenId();
           const numberLooop = number.toJSON();
           const dale = parseInt(numberLooop);
-          console.log('conta', accountSelected);
+
           for (let a = 0; a <= dale - 1; a += 1) {
             const token = await api.query.tokenNonFungible.ownedTokens(
               accountSelected,
@@ -56,17 +52,17 @@ function Profile (props) {
       return null;
     }
     getTokens();
-  }, [api.query.tokenNonFungible, accountAddress, api, accountSelected]);
-  console.log('id da nft', nftId, 'valor a ser vendido', targetValue);
+  }, [accountAddress, api, accountSelected]);
+
   const accountPair =
     accountAddress &&
-    keyringState === 'READY' &&
+    keyringState === "READY" &&
     keyring.getPair(accountAddress);
 
   const getFromAcct = async () => {
     const {
       address,
-      meta: { source, isInjected }
+      meta: { source, isInjected },
     } = accountPair;
     let fromAcct;
 
@@ -82,32 +78,29 @@ function Profile (props) {
     return fromAcct;
   };
   const txResHandler = ({ status }) => {
-    setRender(false);
     if (status.isFinalized) {
       setStatus(status.type);
-      setRender(true);
     }
     setStatus(status.type);
   };
 
-  async function saleNft () {
-    setRender(false);
+  async function saleNft() {
     const fromAcct = await getFromAcct();
-    const extr = await api.tx.nftMarket.addSale(nftId, targetValue);
-    const saleExists = await api.query.nftMarket.salesInfo(nftId);
-    const response = await saleExists.toHuman();
-    console.log(response, 'sou');
     try {
+      const extr = await api.tx.nftMarket.addSale(nftId, targetValue);
+      console.log(nftId, targetValue);
+      const saleExists = await api.query.nftMarket.salesInfo(nftId);
+      const response = await saleExists.toHuman();
       if (
-        (await response) === 'undefined' ||
-        response === 'null' ||
+        (await response) === "undefined" ||
+        response === "null" ||
         response === null
       ) {
         const sign = await extr.signAndSend(fromAcct, txResHandler);
 
         return sign;
       } else {
-        alert('esta nft ja esta a venda');
+        alert("esta nft ja esta a venda");
         return 1;
       }
     } catch (e) {
@@ -121,24 +114,24 @@ function Profile (props) {
   const handleShowSet = (e) => {
     setShowAuction(true);
   };
-  if (apiState === 'ERROR') return message(apiError);
-  else if (apiState !== 'READY') return loader('Connecting to Substrate');
+  if (apiState === "ERROR") return message(apiError);
+  else if (apiState !== "READY") return loader("Connecting to Substrate");
 
-  if (keyringState !== 'READY') {
+  if (keyringState !== "READY") {
     return loader(
       "Loading accounts (please review any extension's authorization)"
     );
   }
-  function getValue (e) {
-    console.log('carreguei', value);
+  function getValue(e) {
+    console.log("carreguei", value);
     setValue(e.target.value);
   }
-  function getValueToSale (e) {
+  function getValueToSale(e) {
     const value = e.target.value;
-    setNftId(value.replace(/\D+/g, ''));
+    setNftId(value.replace(/\D+/g, ""));
   }
 
-  function handleChange (e) {
+  function handleChange(e) {
     setTargetValue(e.target.value);
   }
 
@@ -170,13 +163,13 @@ function Profile (props) {
                   />
                 </svg>
 
-                <img src={Logo} alt="logo" />
+                <img src={Logo} alt="MAPS" />
               </div>
             </div>
             <nav className="mt-10">
               <Link
-                className="flex items-center mt-4 py-2 px-6 bg-gray-700 bg-opacity-25 text-gray-100"
                 to="/auctions"
+                className="flex items-center mt-4 py-2 px-6 bg-gray-700 bg-opacity-25 text-gray-100"
               >
                 <svg
                   className="h-6 w-6"
@@ -221,8 +214,8 @@ function Profile (props) {
                 <span className="mx-3">NFT MARKET</span>
               </Link>
               <Link
-                className="flex items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
                 to="/App"
+                className="flex items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
               >
                 <svg
                   className="h-6 w-6"
@@ -241,8 +234,8 @@ function Profile (props) {
                 <span className="mx-3">Home</span>
               </Link>
               <Link
-                className="flex items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
                 to="#"
+                className="flex items-center mt-4 py-2 px-6 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
               >
                 <svg
                   className="h-6 w-6"
@@ -280,25 +273,6 @@ function Profile (props) {
                     className="fixed inset-0 h-full w-full z-10"
                     style={{ display: 'none' }}
                   />
-                  <div
-                    x-show="dropdownOpen"
-                    className="absolute right-0 mt-2 w-48 bg-white rounded-md overflow-hidden shadow-xl z-10"
-                    style={{ display: 'none' }}
-                  >
-                    <Link
-                      href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white"
-                    >
-                      Profile
-                    </Link>
-
-                    <Link
-                      href="/login"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white"
-                    >
-                      Logout
-                    </Link>
-                  </div>
                 </div>
               </div>
             </header>
@@ -327,47 +301,47 @@ function Profile (props) {
           <select
             onClick={getValue}
             className="flex justify-center w-full h-20 text-center bg-green"
-          > <option value="5" selected disabled hidden>Open</option>
-            <option value="1" >Add Sale</option>
+          >
+            <option value="5" selected disabled hidden>
+              Open
+            </option>
+            <option value="1">Add Sale</option>
             <option value="2">Create Auction</option>
           </select>
           <hr />
-          {value === '1'
-            ? (
+          {value === "1" ? (
             <div>
               <p>Select NFT FOR SALE</p>
               <select
                 className="flex justify-center w-full h-20 text-center bg-green"
                 onClick={getValueToSale}
               >
-                        <option selected disabled hidden>Open</option>
+                <option selected disabled hidden>
+                  Open
+                </option>
                 {nft.map((val) => (
-
                   <option key={val.token_id} value={val.token_id}>
                     {val.name}
                   </option>
-
                 ))}
               </select>
               <input
                 onChange={handleChange}
                 placeholder="Write the value"
                 className="flex w-full h-10 my-2"
-                style={{ backgroundColor: 'white', border: 'solid 3px' }}
+                style={{ backgroundColor: "white", border: "solid 3px" }}
                 type="number"
                 required
               />
 
-                 <Button className="w-full my-2" onClick={saleNft}>
+              <Button className="w-full my-2" onClick={saleNft}>
                 Send
               </Button>
-                   <h2>
-shipping status: {status}</h2>
-
+              <h2>shipping status: {status}</h2>
             </div>
-              )
-            : ''
-            }
+          ) : (
+            ""
+          )}
         </Modal.Body>
         <Modal.Footer></Modal.Footer>
       </Modal>
