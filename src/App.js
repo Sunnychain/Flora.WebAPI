@@ -8,6 +8,7 @@ import AboutPage from './pages/About/About';
 import Market from './pages/market/Market';
 import Auctions from './pages/Auctions/Auctions';
 import Profile from './pages/Profile/Profile';
+import Game from './pages/Game/test';
 import Details from './pages/Description/Description';
 import { SubstrateContextProvider } from './substrate-lib';
 export default function App () {
@@ -17,6 +18,9 @@ export default function App () {
         <Switch>
           <Route path='/' exact>
             <WebSite />
+          </Route>
+          <Route path='/game' exact>
+            <Game />
           </Route>
           <Route path='/app' exact>
             <Home />
