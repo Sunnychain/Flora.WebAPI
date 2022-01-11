@@ -9,7 +9,7 @@ services:
       dockerfile: ./Dockerfile
     container_name: flora_web
     ports:
-      - "3000:3000"
+      - "3000:80"
     volumes:
       - "/usr/srs/app/node_modules"
       - "./:/usr/srs/app"

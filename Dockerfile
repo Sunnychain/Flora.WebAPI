@@ -1,14 +1,14 @@
-FROM node:14.18.1 as build-step
+FROM node:14-alpine as build-step
 
 WORKDIR /usr/srs/app
 
-COPY package*.json /usr/srs/app
-RUN ls
-#RUN npm install -g npm@8.3.0
-RUN npm install
+COPY package.json yarn.lock /usr/srs/app/
+RUN apk add git
+RUN git config --global url."git@github.com:org".insteadOf "git://github.com/org"
+RUN yarn install
 
-COPY . /usr/srs/app
-RUN npm run build
+COPY . /usr/srs/app/
+RUN yarn build
 
 FROM nginx:1.17.1-alpine
 COPY --from=build-step /usr/srs/app/build /usr/share/nginx/html/
@@ -17,4 +17,4 @@ COPY nginx/nginx.conf /etc/nginx/conf.d
 
 EXPOSE 80
 
-CMD [ "nginx","-s","daemon off" ]
+CMD ["nginx","-g", "daemon off;"]
