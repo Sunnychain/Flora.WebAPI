@@ -36,6 +36,7 @@
     "malihu-custom-scrollbar-plugin": "^3.1.5",
     "node-sass": "^6.0.1",
     "npm": "^8.1.0",
+    "npm-check-updates": "^12.1.0",
     "popper.js": "^1.15.0",
     "prop-types": "^15.7.2",
     "query-string": "^6.13.5",
@@ -53,7 +54,8 @@
     "reactjs-popup": "^2.0.5",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^2.0.3",
-    "web3": "^1.6.0"
+    "web3": "^1.6.0",
+    "x": "^0.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",

@@ -1,0 +1,15 @@
+version: "3.5"
+
+services:
+  app-flora_web:
+    image: paulolopesestevao/flora-front:latest
+    stdin_open: true
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: flora_web
+    ports:
+      - "3000:3000"
+    volumes:
+      - "/usr/srs/app/node_modules"
+      - "./:/usr/srs/app"

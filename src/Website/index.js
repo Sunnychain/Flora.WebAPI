@@ -20,7 +20,7 @@ function WebSite () {
         <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
         {/* Core theme CSS (includes Bootstrap) */}
-        <link href="css/styles.css" rel="stylesheet" />
+        <link type="text/css" href="css/styles.css" rel="stylesheet" />
         {/* Navigation */}
         <nav className="navbar navbar-expand-lg fixed-top navbar-light" id="mainNav">
           <div className="container px-4 px-lg-5">
